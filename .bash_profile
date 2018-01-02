@@ -11,14 +11,12 @@
 
 #  Sections:
 #  1.  Environment Configuration
-#  2.  Make Terminal Better (remapping defaults and adding functionality)
+#  2.  Make Terminal Better 
 #  3.  File and Folder Management
 #  4.  Searching
 #  5.  Process Management
 #  6.  Networking
 #  7.  System Operations & Information
-#  8.  Web Development
-#  9.  Reminders & Notes
 #
 #  ---------------------------------------------------------------------------
 
@@ -42,6 +40,10 @@ export GIT_EDITOR='vim'
 export GEMEDITOR="vim"
 
 #   Install Brew dependencies
+function bbb () {
+  brew update; brew upgrade; brew cleanup
+}
+
 brew_check_or_install() {
 	for package in "$@"
 	do
@@ -100,16 +102,56 @@ parse_git_branch() {
 }
 export PS1="\u@\h \[\033[32m\]\w\[\033[33m\]\$(parse_git_branch)\[\033[00m\] $ "
 
-
 # Rails
 alias be="bundle exec"
+
+#   -------------------------------
+#   3. FILE AND FOLDER MANAGEMENT
+#   -------------------------------
+
+#   extract:  Extract most know archives with one command
+#   ---------------------------------------------------------
+    extract () {
+        if [ -f $1 ] ; then
+          case $1 in
+            *.tar.bz2)   tar xjf $1     ;;
+            *.tar.gz)    tar xzf $1     ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar e $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xf $1      ;;
+            *.tbz2)      tar xjf $1     ;;
+            *.tgz)       tar xzf $1     ;;
+            *.zip)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *)     echo "'$1' cannot be extracted via extract()" ;;
+             esac
+         else
+             echo "'$1' is not a valid file"
+         fi
+    }
+
 
 #   ---------------------------
 #   4. Searching
 #   ---------------------------
 
-git_ff() { 
-  if [ -s `which fzf` ]; then git co `git branch | fzf`; fi 
+git_ff () { git co $(git branch | fzf); }    # git_ff    Pull up a scrollable dropdown of git branches
+ff () { /usr/bin/find . -name "$@" | fzf; }              # ff:       Find file under the current directory
+ffs () { /usr/bin/find . -name "$@"'*' | fzf; }          # ffs:      Find file whose name starts with a given string
+
+# fuzzy grep open via ag
+# See https://github.com/junegunn/fzf/wiki/examples#opening-files
+open_ff() {
+  local file
+
+  file="$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1 " +" $2}')"
+
+  if [[ -n $file ]]
+  then
+     $EDITOR $file
+  fi
 }
 
 #   ---------------------------
@@ -130,6 +172,29 @@ alias ttop="top -R -F -s 10 -o rsize | less"
 #   my_ps: List processes owned by my user:
 #   ------------------------------------------------------------
 my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,start,time,bsdtime,command ; }
+
+#   ---------------------------
+#   6. NETWORKING
+#   ---------------------------
+
+alias my_public_ip='dig +short myip.opendns.com @resolver1.opendns.com'   # myip:   Public facing IP Address
+alias my_ip='ipconfig getifaddr en0'                                      # myip:   Machine IP Address
+alias net_cons='lsof -i'                                                  # net_cons:     Show all open TCP/IP sockets
+alias lsock='sudo /usr/sbin/lsof -i -P'                                   # lsock:        Display open sockets
+alias ip_info0='ipconfig getpacket en0'                                   # ip_info0:     Get info on connections for en0
+alias ip_info1='ipconfig getpacket en1'                                   # ip_info1:     Get info on connections for en1
+
+#   ii:  display useful host related informaton
+#   -------------------------------------------------------------------
+    host_info() {
+        echo -e "\nYou are logged on $HOSTNAME"
+        echo -e "\nAdditionnal information:$NC " ; uname -a
+        echo -e "\n${RED}Users logged on:$NC " ; w -h
+        echo -e "\n${RED}Current date :$NC " ; date
+        echo -e "\n${RED}Machine stats :$NC " ; uptime
+        echo -e "\n${RED}Current network location :$NC " ; scselect
+        echo -e "\n${RED}Public facing IP Address :$NC " ; my_public_ip
+    }
 
 # Source third-party config files
 test -e "$HOME/.iterm2_shell_integration.bash" && source "$HOME/.iterm2_shell_integration.bash"
