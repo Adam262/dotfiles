@@ -4,7 +4,7 @@
 #
 #  Description:  This file holds all my BASH configurations and aliases
 
-#	 The format is inspired by Nate Landau's ./bash_profile. I have also copied some of his content. 
+#  The format is inspired by Nate Landau's ./bash_profile. I have also copied some of his content. 
 #  https://natelandau.com/my-mac-osx-bash_profile/
 
 #  Some content is also taken from https://github.com/agibralter/dotselfi
@@ -42,12 +42,19 @@ export GIT_EDITOR='vim'
 export GEMEDITOR="vim"
 
 #   Install Brew dependencies
-if brew ls --versions coreutils > /dev/null; then 
-	echo 'coreutils is installed'
-else
-	echo 'Installing coreutils...'
-	brew install coreutils
-fi
+brew_check_or_install() {
+	for package in "$@"
+	do
+		if brew ls --versions $package > /dev/null; then 
+			echo "$package is installed"
+		else
+			echo "Installing $package..."
+			brew install $package
+		fi
+	done
+}
+
+brew_check_or_install coreutils fzf node the_silver_searcher yarn
 
 #   -----------------------------
 #   2. MAKE TERMINAL BETTER
@@ -63,7 +70,7 @@ alias cp='cp -iv'                           # Preferred 'cp' implementation
 alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias rm='rm -iv'                           # Preferred 'rm' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
-mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
+mcd() { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
 
 alias la='ls -a'
 alias ls='ls -GF'
