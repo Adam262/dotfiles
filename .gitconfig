@@ -1,0 +1,28 @@
+[user]
+	name = Adam Barcan
+	email = abarcan@gmail.com
+
+[github]
+	user = Adam262
+
+[push]
+  default = simple
+
+[rerere]
+  enabled = true
+
+[difftool]
+  tool = vimdiff
+
+[color]
+  ui = auto
+  diff = auto
+
+[alias]
+	co = checkout
+	cob = checkout -b
+	br = branch
+	st = status
+	lg = log
+	pfwl = push --force-with-lease
+	brd = branch -D

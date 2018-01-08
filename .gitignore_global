@@ -1,0 +1,21 @@
+# Node
+npm-debug.log
+
+# Rails
+.bundler_bin
+vendor/cache/**/Gemfile.lock
+vendor/cache/**/.rakeTasks
+
+# Mac
+.DS_Store
+
+# WebStorm
+.idea/
+
+# vi
+*~
+
+# General
+log/
+*.log
+.secretsrc

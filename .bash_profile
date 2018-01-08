@@ -39,25 +39,6 @@ export EDITOR="vim"
 export GIT_EDITOR='vim'
 export GEMEDITOR="vim"
 
-#   Install Brew dependencies
-function bbb () {
-  brew update; brew upgrade; brew cleanup
-}
-
-brew_check_or_install() {
-	for package in "$@"
-	do
-		if brew ls --versions $package > /dev/null; then 
-			echo "$package is installed"
-		else
-			echo "Installing $package..."
-			brew install $package
-		fi
-	done
-}
-
-brew_check_or_install coreutils fzf node the_silver_searcher yarn
-
 #   -----------------------------
 #   2. MAKE TERMINAL BETTER
 #   -----------------------------
@@ -79,6 +60,7 @@ alias ls='ls -GF'
 alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
 
 alias less='less -FSRXc'                    # Preferred 'less' implementation
+alias echo='echo -e'                        # Preferred 'echo' implementation, interprets backslash escapes
 
 alias sizes="du -hs * | gsort -hr"          # Depends on GNU Coreutils for `gsort`
 
@@ -138,8 +120,8 @@ alias be="bundle exec"
 #   ---------------------------
 
 git_ff () { git co $(git branch | fzf); }    # git_ff    Pull up a scrollable dropdown of git branches
-ff () { /usr/bin/find . -name "$@" | fzf; }              # ff:       Find file under the current directory
-ffs () { /usr/bin/find . -name "$@"'*' | fzf; }          # ffs:      Find file whose name starts with a given string
+ff () { /usr/bin/find . -name -type f "$@" | fzf; }              # ff:       Find file under the current directory
+ffs () { /usr/bin/find . -name "$@"'*' -type f | fzf; }          # ffs:      Find file whose name starts with a given string
 
 # fuzzy grep open via ag
 # See https://github.com/junegunn/fzf/wiki/examples#opening-files
