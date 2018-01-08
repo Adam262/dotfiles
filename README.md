@@ -1,19 +1,36 @@
 ### Overview
-This is my first attempt at creating resuable dotfiles I can check into version control in order to copy to any new machine.  For now, it works with symlinks. I'm thinking about a better solution. 
+This is my first attempt at creating resuable dotfiles I can check into version control in order to copy to any new macOS machine.  
 
 ### Setup
-Do not create .bash_profile or .bashrc files in your home directory. Rather:
+* The install script will create symlinks in your `$HOME` directory for several config files. Make sure you do not already have these files in your `$HOME` directory - the script will raise an error when trying to write link.
+  * `.bash_profile`
+  * `.bashrc`
+  * `.editorconfig`
+  * `.gitconfig`
+  * `.gitignore_global`
+  * `.vimrc`
+
 * `git clone` this repo into your home directory
-* In your home directory, run: `ln -s .dotfiles/.bash_profile .` and `ln -s .dotfiles/.bashrc.`
+* From anywhere, run `mac_install.sh`. This will create the symlinks and find or install several Homebrew formulae
 * Open a new terminal tab or `source ~/.bash_profile`
 * Optionally create a `.secretsrc` file in your home directory. This is to avoid version controlling any sensitive text such as API keys. 
 
 ### Dependencies
-You need to have the XCode Command Line Tools installed. In OSX 10.9+, open up a terminal, type `xcode-select --install` and follow the prompts.
+* XCode Command Line Tools installed. In OSX 10.9+, open up a terminal, type `xcode-select --install` and follow the prompts.
+* OSX Homebrew
 
-The script depends on OSX Homebrew. It will then detect or automatically install the below formulae:
+### Installed Formulae and Packages
+The script detect or automatically install the below Homebrew formulae:
 * coreutils
 * fzf
 * node
 * the_silver_searcher
 * yarn
+
+### TODO
+* Allow script to detect and adapt to the OS; eg, it can install the appropriate package manager. 
+* Install language version managers such as `npm` and `rbenv`, and install a version
+* Install core Node and Ruby packages
+* Install Mac Applications
+* Install Sublime Text packages
+

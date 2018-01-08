@@ -1,6 +1,15 @@
 #!/bin/bash
 export DOTFILES_DIR="$HOME/.dotfiles"
 
+FORMULAE=(
+  coreutils
+  fzf
+  the_silver_searcher
+  node
+  yarn
+  wget
+)
+
 # Write symlinks to home directory
 
 ln -sfv "$DOTFILES_DIR/.bash_profile" ~
@@ -23,7 +32,7 @@ brew_check_or_install() {
   done
 }
 
-brew_check_or_install coreutils fzf node the_silver_searcher yarn
+brew_check_or_install ${FORMULAE[@]}
 
 # Make Mac update functions available
 
