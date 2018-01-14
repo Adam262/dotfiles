@@ -20,17 +20,17 @@ This is my first attempt at creating resuable dotfiles I can check into version 
 * OSX Homebrew
 
 ### Installed Formulae and Packages
-The script detect or automatically install the below Homebrew formulae:
+The script will detect or automatically install the below Homebrew formulae:
 * coreutils
 * fzf
 * node
 * the_silver_searcher
-* yarn
+
+It will also install `nvm`, set a Node version, install `yarn` and add select few global packages (for now, only `create-react-app`) 
 
 ### TODO
-* Allow script to detect and adapt to the OS; eg, it can install the appropriate package manager. 
-* Install language version managers such as `npm` and `rbenv`, and install a version
-* Install core Node and Ruby packages
-* Install Mac Applications
+* ~~Install Node ecosystem, including nvm, Node version, yarn and any global packages~~
+* Install rbenv and set version
 * Install Sublime Text packages
+* Allow script to detect and adapt to the OS; eg, it can install the appropriate package manager. 
 

@@ -32,7 +32,6 @@ test -e "$HOME/.secretsrc" && source "$HOME/.secretsrc"
 #   Set paths
 export PATH="/usr/local/opt/icu4c/bin:/usr/local/opt/icu4c/sbin:$PATH"
 export PATH="$PATH:`yarn global bin`"
-export NVM_DIR="$HOME/.nvm"
 
 #   Set default editors
 export EDITOR="vim"

@@ -1,12 +1,10 @@
 #!/bin/bash
-export DOTFILES_DIR="$HOME/.dotfiles"
+export DOTFILES_DIR='.dotfiles'
 
 FORMULAE=(
   coreutils
   fzf
   the_silver_searcher
-  node
-  yarn
   wget
 )
 
@@ -33,6 +31,10 @@ brew_check_or_install() {
 }
 
 brew_check_or_install ${FORMULAE[@]}
+
+# Install nvm, set Node version
+# Then install Yarn and any global packages such as create-react-app
+$DOTFILES_DIR/node_install.sh
 
 # Make Mac update functions available
 
