@@ -34,10 +34,13 @@ export PATH="/usr/local/opt/icu4c/bin:/usr/local/opt/icu4c/sbin:$PATH"
 export PATH="$PATH:`yarn global bin`"
 
 #   Set default editors
-export EDITOR="vim"
+export BUNDLE_EDITOR='subl -w'
+export EDITOR='subl -w'
 export GIT_EDITOR='vim'
-export GEMEDITOR="vim"
 
+#   Set up rbenv and set Ruby version
+eval "$(rbenv init -)"
+export RBENV_VERSION=2.3.3 
 #   -----------------------------
 #   2. MAKE TERMINAL BETTER
 #   -----------------------------
@@ -46,7 +49,6 @@ export GEMEDITOR="vim"
 alias ~="cd ~"                              # ~:            Go Home
 alias ..="cd ~"                              # ..:           Go back 1 directory level
 alias ..="cd ../"
-cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
 
 alias cp='cp -iv'                           # Preferred 'cp' implementation
 alias mv='mv -iv'                           # Preferred 'mv' implementation
@@ -56,7 +58,6 @@ mcd() { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jum
 
 alias la='ls -a'
 alias ls='ls -GF'
-alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
 
 alias less='less -FSRXc'                    # Preferred 'less' implementation
 alias echo='echo -e'                        # Preferred 'echo' implementation, interprets backslash escapes

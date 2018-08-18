@@ -1,11 +1,12 @@
 #!/bin/bash
-export DOTFILES_DIR='.dotfiles'
+export DOTFILES_DIR="$HOME/.dotfiles"
 
 FORMULAE=(
   coreutils
   fzf
   the_silver_searcher
   wget
+  rebenv
 )
 
 # Write symlinks to home directory
@@ -15,6 +16,7 @@ ln -sfv "$DOTFILES_DIR/.bashrc" ~
 ln -sfv "$DOTFILES_DIR/.editorconfig" ~
 ln -sfv "$DOTFILES_DIR/.gitconfig" ~
 ln -sfv "$DOTFILES_DIR/.gitignore_global" ~
+ln -sfv "$DOTFILES_DIR/.prettierrc" ~
 ln -sfv "$DOTFILES_DIR/.vimrc" ~
 
 # Install brew packages

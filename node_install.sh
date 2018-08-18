@@ -3,7 +3,26 @@ export NVM_DIR="$HOME/.nvm"
 export YARN_DIR="$HOME/.yarn"
 export NVM_VERSION='v0.33.8'
 export NODE_VERSION=9
- 
+
+NODE_PACKAGES=(
+  create-react-app
+  gatsby-cli
+  prettier
+)
+
+# Install brew packages
+yarn_check_or_install() {
+  for package in "$@"
+  do
+    if test -d "$HOME/.config/yarn/global/node_modules/$package"; then 
+      echo "$package is installed"
+    else
+      echo "Installing $package..."
+      yarn global add $package --prefix /usr/local
+    fi
+  done
+}
+
 # Install nvm 
 if test -d "$NVM_DIR" > /dev/null; then 
   echo "nvm is installed"
@@ -28,4 +47,4 @@ else
 fi
 
 # Globally install packages
-yarn global add create-react-app --prefix /usr/local
+yarn_check_or_install ${NODE_PACKAGES[@]}
