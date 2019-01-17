@@ -4,9 +4,10 @@ export DOTFILES_DIR="$HOME/.dotfiles"
 FORMULAE=(
   coreutils
   fzf
+  rbenv
+  shellcheck
   the_silver_searcher
   wget
-  rebenv
 )
 
 # Write symlinks to home directory
